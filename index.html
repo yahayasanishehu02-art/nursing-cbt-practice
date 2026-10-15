@@ -1,0 +1,80 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HAMDALA COLLEGE CBT</title>
+<style>
+body{font-family:Arial;margin:0;background:#f0f4f8}
+.header{background:#0b5394;color:white;padding:15px;text-align:center}
+.container{padding:10px;max-width:700px;margin:auto}
+.card{background:white;padding:12px;margin:10px 0;border-radius:10px;box-shadow:0 2px 5px #ccc}
+.q{font-weight:bold;margin-bottom:8px}
+.opt{padding:8px;border:1px solid #ddd;margin:4px 0;border-radius:6px;display:block}
+.btn{background:#0b5394;color:white;padding:12px 20px;border:none;border-radius:8px;width:100%;font-size:18px;margin-top:15px}
+.result{background:green;color:white;padding:15px;border-radius:10px;text-align:center;display:none;margin:15px 0}
+</style>
+</head>
+<body>
+<div class="header">
+<h2>HAMDALA COLLEGE OF NURSING</h2>
+<p>ND2 - PHC VERY DIFFICULT CBT</p>
+<p id="timer">Time: 40:00</p>
+</div>
+<div class="container">
+<div id="quiz"></div>
+<button class="btn" onclick="submitExam()">SUBMIT EXAM</button>
+<div id="result" class="result"></div>
+</div>
+<script>
+const questions=[
+{q:"1. Alma-Ata Declaration was in?",o:["1970","1978","1986","2000"],a:1},
+{q:"2. Current name of Alma-Ata?",o:["Almaty","Astana","Moscow","Lagos"],a:0},
+{q:"3. Kidney is covered by?",o:["Fibrous capsule","Connective tissue capsule","Adipose capsule","Serous membrane"],a:1},
+{q:"4. NOT principle of PHC?",o:["Equity","Community participation","High technology","Intersectoral"],a:2},
+{q:"5. PHC reaffirmed in Astana in?",o:["2008","2018","1978","2020"],a:1},
+{q:"6. Essential elements of PHC?",o:["8","10","12","14"],a:0},
+{q:"7. Community diagnosis by?",o:["Doctor alone","Comm Health Nurse","Community with health team","Lab tech"],a:2},
+{q:"8. Cold chain temp for vaccines?",o:["0 to 8C","2 to 8C","-2 to 8C","10 to 20C"],a:1},
+{q:"9. OPV sensitive to?",o:["Heat","Cold","Light","All"],a:0},
+{q:"10. Maternal mortality within?",o:["24hrs","7 days","42 days post delivery","1 year"],a:2},
+{q:"11. Common cause of maternal death?",o:["Hemorrhage","Malaria","Hypertension","Sepsis"],a:0},
+{q:"12. Exclusive breastfeeding for?",o:["3 months","4 months","6 months","12 months"],a:2},
+{q:"13. Growth monitoring chart called?",o:["Road to health","Road to hospital","Health road","Growth line"],a:0},
+{q:"14. ORS composition?",o:["Salt and sugar only","Salt,sugar,potassium","Only sugar","Salt only"],a:1},
+{q:"15. Measles vaccine given at?",o:["Birth","6 weeks","9 months","12 months"],a:2},
+{q:"16. BCG protects against?",o:["Polio","Tuberculosis","Measles","Tetanus"],a:1},
+{q:"17. DOTs is for?",o:["Malaria","TB","HIV","Cholera"],a:1},
+{q:"18. NOT waterborne disease?",o:["Cholera","Typhoid","Malaria","Dysentery"],a:2},
+{q:"19. Main focus of PHC?",o:["Curative","Preventive and promotive","Hospital care","Surgery"],a:1},
+{q:"20. Village Health Worker selected by?",o:["Government","Community","Doctor","Nurse"],a:1}
+];
+let html="";
+questions.forEach((qq,i)=>{
+html+=`<div class="card"><div class="q">${qq.q}</div>`;
+qq.o.forEach((opt,j)=>{
+html+=`<label class="opt"><input type="radio" name="q${i}" value="${j}"> ${String.fromCharCode(65+j)}. ${opt}</label>`;
+});
+html+=`</div>`;
+});
+document.getElementById("quiz").innerHTML=html;
+function submitExam(){
+let score=0;
+questions.forEach((qq,i)=>{
+let sel=document.querySelector(`input[name="q${i}"]:checked`);
+if(sel && parseInt(sel.value)==qq.a) score++;
+});
+let res=document.getElementById("result");
+res.style.display="block";
+res.innerHTML=`<h2>Result: ${score} / ${questions.length}</h2><p>${score>=10?"Masha Allah! Ka ci":"Ka kara karatu"}</p>`;
+window.scrollTo(0,0);
+}
+let time=40*60;
+setInterval(()=>{
+time--;
+let m=Math.floor(time/60); let s=time%60;
+document.getElementById("timer").innerText=`Time: ${m}:${s<10?"0":""}${s}`;
+if(time<=0){submitExam()}
+},1000);
+</script>
+</body>
+</html>
